@@ -200,3 +200,26 @@ function renderData(newData=data){
   card.innerHTML=html;
   // deleteCard() 刪除卡片
 }
+
+//地區塞選
+function regionSearchHandler(){
+  const newData=data.filter((item)=>{
+    if(item.area===this.value){
+      return item
+    }else if(!this.value){
+      return item
+    }
+  })
+  renderData(newData)
+}
+
+//inputHandler
+function inputHandler(){
+  this.nextElementSibling.textContent="";
+  let errors =validate(addTicketForm,constraints)
+  if(errors){
+    Object.keys(errors).forEach((item)=>{
+      document.querySelector(`.${item}`).textContent=errors[item]
+    })
+  }
+}

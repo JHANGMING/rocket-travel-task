@@ -1,11 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./public/css/output.css" />
+    <title>TravelSite</title>
+  </head>
+  <body>
+    <section class="container md:mt-24 mb-20">
+      <div class="max-w-[920px] mx-auto shadowTravelBox py-15">
+        <div class="grid grid-cols-10 md:gap-6">
+          <div class="col-start-2 col-end-10 md:col-start-2 md:col-end-6">
+        <img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/main_img.png?raw=true" alt="" class="mb-4">
+        <img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/logo.png?raw=true" alt="" class="hidden md:block">
+          </div>
+          <div class="col-start-2 col-end-10 md:col-start-6 md:col-end-10">
+            <form class="addTicketForm">
+              <div class="flex items-center border-b-[3px] border-travel pb-1 mb-8">
+                <i class="fas fa-plus-circle text-xl mr-[6px]"></i>
+                <h1 class="text-2xl font-bold">新增旅遊套票</h1>
+              </div>
+              <div class="grid grid-cols-4 gap-x-6 gap-y-1.75">
+                <label for="ticketName" class="col-span-4 md:col-span-1">套票名稱</label>
+                <input type="text" id="ticketName" name="名稱" class="col-span-4 md:col-span-3 inputDesign" placeholder="請填寫套票名稱">
+                <p class="名稱 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketImgUrl" class="col-span-4 md:col-span-1">圖片網址</label>
+                <input type="text" id="ticketImgUrl"  name="圖片網址" class="col-span-4 md:col-span-3 inputDesign" placeholder="請填寫圖片網址">
+                <p class="圖片網址 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketRegion" class="col-span-4 md:col-span-1">景點地區</label>
+                <select id="ticketRegion" name="景點地區" class="col-span-4 md:col-span-3 inputDesign text-travel-second pl-1.75">
+                  <option value="" disabled="" selected="" hidden="" >請選擇景點地區</option>
+                  <option value="台北">台北</option>
+                  <option value="台中">台中</option>
+                  <option value="高雄">高雄</option>
+                </select>
+                <p class="景點地區 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketPrice" name="price" class="col-span-4 md:col-span-1">套票金額</label>
+                <input type="number" id="ticketPrice" name="金額" class="col-span-4 md:col-span-3 inputDesign" placeholder="請填寫套票金額" min="0">
+                <p class="金額 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketNum" class="col-span-4 md:col-span-1">套票組數</label>
+                <input type="number" id="ticketNum" name="組數" class="col-span-4 md:col-span-3 inputDesign" placeholder="請填寫套票組數" min="1">
+                <p class="組數 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketRate" class="col-span-4 md:col-span-1">套票星級</label>
+                <input type="number" id="ticketRate" name="星級" class="col-span-4 md:col-span-3 inputDesign" placeholder="請填寫套票星級" min="1" max="10">
+                <p class="星級 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <label for="ticketDescription" class="col-span-4 md:col-span-1">套票描述</label>
+                <textarea name="描述" id="ticketDescription" class="col-span-4 md:col-span-3 h-[111px] bg-travel-first border-b border-travel text-travel-second resize-none pl-2.15 pt-1.75 mb-1.75" placeholder="請填寫套票描述（限 100 字）"></textarea>
+                <p class="描述 text-red-600 font-bold col-start-2 col-end-5"></p>
+                <button type="submit" class="addTicketBtn col-start-2 col-end-4 md:col-start-3 md:col-end-5 h-10 rounded bg-travel-third text-white hover:bg-travel-fifth hover:text-travel-third hover:font-bold">新增套票</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-travel-first">
+      <div class="container pt-14 pb-20.5">
+        <div class="searchArea max-w-[920px] mx-auto flex flex-wrap justify-center md:justify-start text-travel-second mb-13">
+          <select  class="regionSearch w-full md:w-[28%] h-[38px] border border-travel-forth rounded md:mr-6 px-2.15 mb-3 md:mb-0">
+            <option value="地區搜尋" disabled="" selected="" hidden="">地區搜尋</option>
+            <option value="">全部地區</option>
+            <option value="台北">台北</option>
+            <option value="台中">台中</option>
+            <option value="高雄">高雄</option>
+            <option value="其他縣市">其他縣市</option>
+          </select>
+          <p class="col-span-2 flex items-center">本次搜尋共<span class="searchResultText">3</span>筆資料</p>
+        </div>
+        <ul class="card col-span-12 grid grid-cols-12 gap-6">
+          <li class="col-span-12 sm:col-span-6 md:col-span-4 shadowCard">
+            <div class="relative">
+              <a href="#" class="overflow-hidden"><img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/travel_1.png?raw=true" alt="travel_1.png" class="h-[180px] object-cover w-full"></a>
+              <p class="borderCardTag ticketCardRegion">高雄</p>
+              <p class="borderCardTag ticketCardRank">10</p>
+              <i class="fa-sharp fa-regular fa-circle-xmark delete delete-btn "></i>
+            </div>
+            <div class="flex flex-col justify-between h-[296px] px-4 pt-4 pb-3">
+              <div class="">
+                 <h3 class="pb-1 border-b-2 border-travel-sixth  mb-3.5"><a href="" class="ticketCardName ">綠島自由行套裝行程</a></h3>
+                <p class="text-travel-second">嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合。</p>
+              </div>
+             
+              <div class="flex justify-between font-bold">
+                <div class="flex items-center">
+                  <i class="fas fa-exclamation-circle mr-1.25"></i>
+                  <h4>剩下最後<span>87</span>組</h4>
+                </div>
+                <p class="flex items-center">TWD<span class="text-4xl ml-1">$1400</span></p>
+              </div>
+            </div>
+          </li>
+          <li class="col-span-12 sm:col-span-6 md:col-span-4 shadowCard">
+            <div class="relative">
+              <a href="#" class="overflow-hidden"><img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/travel_4.png?raw=true" alt="travel_4.png" class="h-[180px] object-cover w-full"></a>
+              <p class="borderCardTag ticketCardRegion">台北</p>
+              <p class="borderCardTag ticketCardRank">2</p>
+            </div>
+            <div class="flex flex-col justify-between h-[296px] px-4 pt-4 pb-3">
+              <div class="">
+                 <h3 class="pb-1 border-b-2 border-travel-sixth  mb-3.5"><a href="" class="ticketCardName ">清境高空觀景步道</a></h3>
+                <p class="text-travel-second">清境農場青青草原數十公頃碧草，這些景觀豐沛了清境觀景步道的風格，也涵養它無可取代的特色。</p>
+              </div>
+             
+              <div class="flex justify-between font-bold">
+                <div class="flex items-center">
+                  <i class="fas fa-exclamation-circle mr-1.25"></i>
+                  <h4>剩下最後<span>99</span>組</h4>
+                </div>
+                <p class="flex items-center">TWD<span class="text-4xl ml-1">$240</span></p>
+              </div>
+            </div>
+          </li>
+          <li class="col-span-12 sm:col-span-6 md:col-span-4 shadowCard">
+            <div class="relative">
+              <a href="#" class="overflow-hidden"><img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/travel_3.png?raw=true" alt="travel_3.png" class="h-[180px] object-cover w-full"></a>
+              <p class="borderCardTag ticketCardRegion">台中</p>
+              <p class="borderCardTag ticketCardRank">７</p>
+            </div>
+            <div class="flex flex-col justify-between h-[296px] px-4 pt-4 pb-3">
+              <div class="">
+                 <h3 class="pb-1 border-b-2 border-travel-sixth  mb-3.5"><a href="" class="ticketCardName ">山林悠遊套票</a></h3>
+                <p class="text-travel-second">山林悠遊套票，結合南投清境高空步道、雙龍瀑布七彩吊橋、瑞龍瀑布園區之熱門景點。</p>
+              </div>
+              <div class="flex justify-between font-bold">
+                <div class="flex items-center">
+                  <i class="fas fa-exclamation-circle mr-1.25"></i>
+                  <h4>剩下最後<span>20</span>組</h4>
+                </div>
+                <p class="flex items-center">TWD<span class="text-4xl ml-1">$1765</span></p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="cantFind-area hidden">
+          <div class="flex flex-col items-center">
+            <h3 class="text-2xl font-bold  mb-3">查無此關鍵字資料!!!</h3>
+            <img src="https://github.com/hexschool/2022-web-layout-training/blob/main/js_week5/no_found.png?raw=true" alt="" class="h-[350px]">
+          </div>
+        </div>
+     </div>
+    </section>
+  <script src="https://kit.fontawesome.com/dbac137724.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+  <script src="./all.js"></script>
+  </body>
 </html>

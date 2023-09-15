@@ -198,7 +198,7 @@ function renderData(newData=data){
   </li>
   `).join("")
   card.innerHTML=html;
-  // deleteCard() 刪除卡片
+  deleteCard()
 }
 
 //地區篩選

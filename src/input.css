@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto:ital,wght@0,400;0,900;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "PingFang TC", sans-serif;
+    color: #00807E;
+  }
+  .container {
+    max-width: 940px;
+  }
+  a {
+    display: block;
+  }
+  a:hover{
+    opacity: 0.8;
+  }
+  label{
+    display: flex;
+    align-items: center;
+  }
+  .card img:hover{
+    transform: scale(1.3);
+    transition: all .5s;
+  }
+}
+
+@layer components {
+  .inputDesign {
+    @apply h-[38px] bg-travel-first border-b border-travel text-travel-second px-2.15;
+  }
+  .ticketCardRegion{
+    @apply bg-travel-fifth text-white py-1.75 w-20 text-center absolute top-[-13px];
+  }
+  .ticketCardRank{
+    @apply bg-travel-third w-[39px] py-1.25 text-white text-center absolute bottom-[-16px];
+  }
+  .ticketCardName{
+    @apply text-2xl font-bold;
+  }
+  .delete{
+    @apply absolute top-[-13px] right-[-13px] text-4xl bg-white;
+  }
+}
+
+@layer utilities {
+  .shadowTravelBox {
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 12px;
+    background: #FFFFFF
+  }
+  .shadowCard {
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #DEE2E6;
+    border-radius: 4px;
+  }
+  .borderCardTag{
+    border-radius: 0 5px 5px 0px
+  }
+  .delete-btn{
+    cursor: pointer;
+    border-radius: 100%;
+  }
+  .delete-btn:hover{
+    transform: scale(1.3) ;
+    transition: all .5s;
+  }
+  .shadowCard:hover{
+    transform:  translateY(-10px);
+    transition: all .5s;
+  }
+}

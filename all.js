@@ -201,7 +201,7 @@ function renderData(newData=data){
   deleteCard()
 }
 
-//地區塞選
+//地區篩選
 function regionSearchHandler(){
   const newData=data.filter((item)=>{
     if(item.area===this.value){

@@ -201,7 +201,7 @@ function renderData(newData=data){
   // deleteCard() 刪除卡片
 }
 
-//地區塞選
+//地區篩選
 function regionSearchHandler(){
   const newData=data.filter((item)=>{
     if(item.area===this.value){
@@ -221,5 +221,39 @@ function inputHandler(){
     Object.keys(errors).forEach((item)=>{
       document.querySelector(`.${item}`).textContent=errors[item]
     })
+  }
+}
+
+//刪除卡片
+function deleteCard(){
+  //deleteBtn監聽
+  const deleteBtn=document.querySelectorAll(".delete")
+  deleteBtn.forEach((item)=>{
+  item.addEventListener("click",deleteBtnHandler)
+  })
+
+  function deleteBtnHandler(e){
+    Swal.fire({
+    title: '你確定要刪除嗎?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Deleted!',
+        '刪除成功',
+        'success'
+      )
+      let deleteId=Number(e.target.dataset.id);
+      const findIDindex=data.findIndex((item)=>item.id===deleteId)
+      const newData=data.filter((item)=>item.id!==deleteId)
+      data.splice(findIDindex,1)
+      renderData(newData)
+    }
+  })
   }
 }

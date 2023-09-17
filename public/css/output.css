@@ -783,10 +783,6 @@ label{
   max-width: 920px;
 }
 
-.resize-none{
-  resize: none;
-}
-
 .grid-cols-10{
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
@@ -1021,6 +1017,7 @@ label{
 .shadowCard:hover{
   transform:  translateY(-10px);
   transition: all .5s;
+  box-shadow:0 0 10px rgba(0, 0, 0, .5);
 }
 
 .hover\:bg-travel-fifth:hover{

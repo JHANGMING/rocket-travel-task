@@ -6,7 +6,7 @@
 @layer base {
   html {
     font-family: "PingFang TC", sans-serif;
-    color: #00807E;
+    color: #000;
   }
   .container {
     max-width: 940px;

@@ -1,36 +1,36 @@
 //原始資料
-let data = [
-    {
-      "id": 0,
-      "name": "肥宅心碎賞櫻3日",
-      "imgUrl": "https://images.unsplash.com/photo-1522383225653-ed111181a951?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1655&q=80",
-      "area": "高雄",
-      "description": "賞櫻花最佳去處。肥宅不得不去的超讚景點！",
-      "group": 87,
-      "price": 1400,
-      "rate": 10
-    },
-    {
-      "id": 1,
-      "name": "貓空纜車雙程票",
-      "imgUrl": "https://images.unsplash.com/photo-1501393152198-34b240415948?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-      "area": "台北",
-      "description": "乘坐以透明強化玻璃為地板的「貓纜之眼」水晶車廂，享受騰雲駕霧遨遊天際之感",
-      "group": 99,
-      "price": 240,
-      "rate": 2
-    },
-    {
-      "id": 2,
-      "name": "台中谷關溫泉會1日",
-      "imgUrl": "https://images.unsplash.com/photo-1535530992830-e25d07cfa780?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-      "area": "台中",
-      "description": "全館客房均提供谷關無色無味之優質碳酸原湯，並取用八仙山之山冷泉供蒞臨貴賓沐浴及飲水使用。",
-      "group": 20,
-      "price": 1765,
-      "rate": 7
-    }
-  ];
+// let data = [
+//     {
+//       "id": 0,
+//       "name": "肥宅心碎賞櫻3日",
+//       "imgUrl": "https://images.unsplash.com/photo-1522383225653-ed111181a951?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1655&q=80",
+//       "area": "高雄",
+//       "description": "賞櫻花最佳去處。肥宅不得不去的超讚景點！",
+//       "group": 87,
+//       "price": 1400,
+//       "rate": 10
+//     },
+//     {
+//       "id": 1,
+//       "name": "貓空纜車雙程票",
+//       "imgUrl": "https://images.unsplash.com/photo-1501393152198-34b240415948?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+//       "area": "台北",
+//       "description": "乘坐以透明強化玻璃為地板的「貓纜之眼」水晶車廂，享受騰雲駕霧遨遊天際之感",
+//       "group": 99,
+//       "price": 240,
+//       "rate": 2
+//     },
+//     {
+//       "id": 2,
+//       "name": "台中谷關溫泉會1日",
+//       "imgUrl": "https://images.unsplash.com/photo-1535530992830-e25d07cfa780?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
+//       "area": "台中",
+//       "description": "全館客房均提供谷關無色無味之優質碳酸原湯，並取用八仙山之山冷泉供蒞臨貴賓沐浴及飲水使用。",
+//       "group": 20,
+//       "price": 1765,
+//       "rate": 7
+//     }
+//   ];
 
 //新增套票input,btn
 const ticketName=document.querySelector("#ticketName")
@@ -50,7 +50,7 @@ const regionSearch=document.querySelector(".regionSearch")
 const searchResultText=document.querySelector(".searchResultText")
 //找不到網頁卡片區
 const cantFindArea=document.querySelector(".cantFind-area")
-
+const url="https://raw.githubusercontent.com/hexschool/js-training/main/travelAPI-lv1.json"
 //SweetAlert22
 const Toast = Swal.mixin({
   toast: true,
@@ -67,7 +67,8 @@ const Toast = Swal.mixin({
 //validate.js
 const constraints = {
   "名稱": {
-    presence: {
+    presence: 
+    {
       message: "是必填欄位"
     },
   },
@@ -129,20 +130,40 @@ inputs.forEach((input)=>{
 addTicketForm.addEventListener("submit",addTicketHandler)  //新增套票監聽
 regionSearch.addEventListener("change",regionSearchHandler) //地區塞選監聽
 
+
+//axios
+let data=[];
+const dataList =async()=>{
+  try{
+    const res=await axios.get(url)
+    data=res.data
+    renderData()
+    regionSearchHandler()
+    deleteCard()
+    c3Data(data)
+  }
+  catch(err){
+    Toast.fire({
+      icon: 'error',
+      title: `${err.message}`
+      })
+  }
+}
+
 //初始化
 init()
 function init(){
-  renderData()
+  dataList()
 }
 
 //新增套票
 function addTicketHandler(e){
   e.preventDefault();
   let dataObj={};
-  if(!ticketName.value || !ticketImgUrl.value ||!ticketRegion.value||!ticketPrice.value||!ticketNum.value||!ticketRate.value||!ticketDescription.value){
+  if(!ticketName.value.trim() || !ticketImgUrl.value.trim() ||!ticketRegion.value||!ticketPrice.value||!ticketNum.value||!ticketRate.value||!ticketDescription.value.trim()){
     Swal.fire(
         "新增套票失敗", //標題 
-        "您所輸入的資料不完整!", //訊息內容(可省略)
+        "您所輸入的資料不完整!檢查是否有空白處", //訊息內容(可省略)
         "error" 
     );
   }else{
@@ -158,6 +179,7 @@ function addTicketHandler(e){
     }
     data.push(dataObj)
     renderData()
+    c3Data(data)
     addTicketForm.reset();
     Toast.fire({
       icon: 'success',
@@ -169,6 +191,7 @@ function addTicketHandler(e){
 //畫面渲染
 function renderData(newData=data){
   searchResultText.textContent=newData.length
+  //判斷找不到網頁卡片區
   if(newData.length===0){
     cantFindArea.classList.remove("hidden")
   }else{
@@ -202,18 +225,21 @@ function renderData(newData=data){
 }
 
 //地區篩選
-function regionSearchHandler(){
+function regionSearchHandler(locationChange){
+  typeof locationChange==="object"?locationChange=this.value:null
   const newData=data.filter((item)=>{
-    if(item.area===this.value){
+    if(item.area===locationChange){
       return item
-    }else if(!this.value){
+    }else if(!locationChange){
       return item
     }
   })
   renderData(newData)
+  c3Data(newData)
+  deleteCard(locationChange)
 }
 
-//inputHandler
+//validate inputHandler
 function inputHandler(){
   this.nextElementSibling.textContent="";
   let errors =validate(addTicketForm,constraints)
@@ -225,7 +251,7 @@ function inputHandler(){
 }
 
 //刪除卡片
-function deleteCard(){
+function deleteCard(locationChange){
   //deleteBtn監聽
   const deleteBtn=document.querySelectorAll(".delete")
   deleteBtn.forEach((item)=>{
@@ -250,10 +276,48 @@ function deleteCard(){
       )
       let deleteId=Number(e.target.dataset.id);
       const findIDindex=data.findIndex((item)=>item.id===deleteId)
-      const newData=data.filter((item)=>item.id!==deleteId)
       data.splice(findIDindex,1)
-      renderData(newData)
+      renderData()
+      regionSearchHandler(locationChange)
     }
   })
   }
+}
+
+//c3
+function c3Data(data){
+  const dataObj=data.reduce((obj,cur)=>{
+    const {area}=cur
+    obj[area]=(obj[area]||0)+1
+    return obj
+  },{})
+
+  const newData=Object.keys(dataObj).map((item)=>[item,dataObj[item]])
+  renderC3(newData)
+}
+
+function renderC3(newData){
+  const chart = c3.generate({
+    bindto: "#chart",
+    data: {
+      columns: newData,
+      type : 'donut',
+      colors:{
+          台北: "#26BFC7",
+          台中: "#5151D3",
+          高雄: "#E68619"
+        }
+    },
+    donut: {
+        title: "套票地區比重",
+        width: 10,
+        label: {
+          show: false // 顯示標籤
+        }
+       },
+    size: { 
+    height: 200,
+    width : 200
+  }
+});
 }

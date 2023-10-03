@@ -662,10 +662,6 @@ label{
   grid-column: span 12 / span 12;
 }
 
-.col-span-2{
-  grid-column: span 2 / span 2;
-}
-
 .col-span-4{
   grid-column: span 4 / span 4;
 }
@@ -775,6 +771,10 @@ label{
   height: 38px;
 }
 
+.w-\[80\%\]{
+  width: 80%;
+}
+
 .w-full{
   width: 100%;
 }
@@ -801,6 +801,10 @@ label{
 
 .flex-wrap{
   flex-wrap: wrap;
+}
+
+.items-start{
+  align-items: flex-start;
 }
 
 .items-center{
@@ -969,6 +973,11 @@ label{
   line-height: 25px;
 }
 
+.text-m{
+  font-size: 14px;
+  line-height: 19px;
+}
+
 .font-bold{
   font-weight: 700;
 }
@@ -1093,12 +1102,12 @@ label{
     display: block;
   }
 
-  .md\:w-\[28\%\]{
-    width: 28%;
+  .md\:w-\[35\%\]{
+    width: 35%;
   }
 
-  .md\:justify-start{
-    justify-content: flex-start;
+  .md\:justify-between{
+    justify-content: space-between;
   }
 
   .md\:gap-6{

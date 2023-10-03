@@ -17,6 +17,12 @@ module.exports = {
           lineHeight: "22px",
         },
       ],
+      "m": [
+        "14px",
+        {
+          lineHeight: "19px",
+        },
+      ],
       "xl": [
         "20px",
         {

@@ -220,6 +220,7 @@ function renderData(newData){
   </li>
   `).join("")
   card.innerHTML=html;
+  searchResultText.textContent=newData.length
   deleteCard()
 }
 
@@ -233,7 +234,7 @@ function regionSearchHandler(locationChange){
       return item
     }
   })
-  searchResultText.textContent=newData.length
+  
   renderData(newData)
   c3Data(newData)
   deleteCard(locationChange)

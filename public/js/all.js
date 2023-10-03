@@ -205,8 +205,8 @@ function renderData(newData){
       <i class="fa-regular fa-circle-xmark delete delete-btn" data-id=${item.id}></i>
     </div>
     <div class="flex flex-col justify-between h-[296px] px-4 pt-4 pb-3">
-      <div class="">
-          <h3 class="pb-1 border-b-2 border-travel-sixth  mb-3.5"><a href="" class="ticketCardName ">${item.name}</a></h3>
+      <div>
+          <h3 class="pb-1 border-b-2 border-travel-sixth  mb-3.5"><a href="#2" class="ticketCardName ">${item.name}</a></h3>
         <p class="text-travel-second">${item.description}</p>
       </div>
       <div class="flex justify-between font-bold">

@@ -137,7 +137,6 @@ const dataList =async()=>{
   try{
     const res=await axios.get(url)
     data=res.data
-    renderData()
     regionSearchHandler()
     deleteCard()
     c3Data(data)
@@ -178,7 +177,7 @@ function addTicketHandler(e){
       description:ticketDescription.value
     }
     data.push(dataObj)
-    renderData()
+    renderData(data)
     c3Data(data)
     addTicketForm.reset();
     Toast.fire({
@@ -189,8 +188,8 @@ function addTicketHandler(e){
 }
 
 //畫面渲染
-function renderData(newData=data){
-  searchResultText.textContent=newData.length
+function renderData(newData){
+  
   //判斷找不到網頁卡片區
   if(newData.length===0){
     cantFindArea.classList.remove("hidden")
@@ -234,6 +233,7 @@ function regionSearchHandler(locationChange){
       return item
     }
   })
+  searchResultText.textContent=newData.length
   renderData(newData)
   c3Data(newData)
   deleteCard(locationChange)
@@ -277,7 +277,6 @@ function deleteCard(locationChange){
       let deleteId=Number(e.target.dataset.id);
       const findIDindex=data.findIndex((item)=>item.id===deleteId)
       data.splice(findIDindex,1)
-      renderData()
       regionSearchHandler(locationChange)
     }
   })

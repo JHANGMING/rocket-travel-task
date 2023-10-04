@@ -1,3 +1,7 @@
+
+import{ticketName,ticketImgUrl,ticketRegion,ticketPrice,ticketNum,ticketRate,ticketDescription,addTicketForm,inputs,card,regionSearch,searchResultText,cantFindArea,url} from "../js/domElement.js"; 
+import{Toast} from "../js/SweetAlert2.js"
+import{constraints} from "../js/validate.js"
 //原始資料
 // let data = [
 //     {
@@ -32,108 +36,12 @@
 //     }
 //   ];
 
-//新增套票input,btn
-const ticketName=document.querySelector("#ticketName")
-const ticketImgUrl=document.querySelector("#ticketImgUrl")
-const ticketRegion=document.querySelector("#ticketRegion")
-const ticketPrice=document.querySelector("#ticketPrice")
-const ticketNum=document.querySelector("#ticketNum")
-const ticketRate=document.querySelector("#ticketRate")
-const ticketDescription=document.querySelector("#ticketDescription")
-const addTicketBtn=document.querySelector(".addTicketBtn")
-const addTicketForm=document.querySelector(".addTicketForm")
-const inputs = document.querySelectorAll("input[type=text],input[type=number],textarea,#ticketRegion");
-//卡片區
-const card=document.querySelector(".card")
-//塞選地區選擇
-const regionSearch=document.querySelector(".regionSearch")
-const searchResultText=document.querySelector(".searchResultText")
-//找不到網頁卡片區
-const cantFindArea=document.querySelector(".cantFind-area")
-const url="https://raw.githubusercontent.com/hexschool/js-training/main/travelAPI-lv1.json"
-//SweetAlert22
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
-
-//validate.js
-const constraints = {
-  "名稱": {
-    presence: 
-    {
-      message: "是必填欄位"
-    },
-  },
-  "圖片網址":{
-    presence: {
-      message: "是必填欄位"
-    },
-   
-  },
-  "景點地區":{
-    presence: {
-      message: "是必填欄位"
-    },
-  },
-  "金額":{
-    presence: {
-      message: "是必填欄位"
-    },
-    numericality: {
-      greaterThan: 0,
-      message: "必須大於 0"
-    }
-  },
-  "組數":{
-    presence: {
-      message: "是必填欄位"
-    },
-    numericality: {
-      greaterThan: 0,
-      message: "必須大於 0"
-    }
-  },
-  "星級":{
-    presence: {
-      message: "是必填欄位"
-    },
-    numericality: {
-      greaterThanOrEqualTo: 1,
-      lessThanOrEqualTo: 10,
-      message: "必須符合 1-10 的區間"
-    }
-  },
-  "描述":{
-    presence: {
-      message: "是必填欄位"
-    },
-    length: {
-      maximum: 100,
-      message: "限100字"
-    }
-  },
-};
-
-//input監聽
-inputs.forEach((input)=>{
-  input.addEventListener("change", inputHandler)
-})
-
-addTicketForm.addEventListener("submit",addTicketHandler)  //新增套票監聽
-regionSearch.addEventListener("change",regionSearchHandler) //地區塞選監聽
-
+//初始化
+getDataist()
 
 //axios
 let data=[];
-const dataList =async()=>{
+async function getDataist(){
   try{
     const res=await axios.get(url)
     data=res.data
@@ -147,12 +55,6 @@ const dataList =async()=>{
       title: `${err.message}`
       })
   }
-}
-
-//初始化
-init()
-function init(){
-  dataList()
 }
 
 //新增套票
@@ -189,13 +91,6 @@ function addTicketHandler(e){
 
 //畫面渲染
 function renderData(newData){
-  
-  //判斷找不到網頁卡片區
-  if(newData.length===0){
-    cantFindArea.classList.remove("hidden")
-  }else{
-    cantFindArea.classList.add("hidden")
-  }
   const html=newData.map((item)=>
   `<li class="col-span-12 sm:col-span-6 md:col-span-4 shadowCard" >
     <div class="relative">
@@ -234,10 +129,19 @@ function regionSearchHandler(locationChange){
       return item
     }
   })
-  
+  cardShow(newData)
   renderData(newData)
   c3Data(newData)
   deleteCard(locationChange)
+}
+
+//判斷找不到網頁卡片區
+function cardShow(newData){
+  if(newData.length===0){
+    cantFindArea.classList.remove("hidden")
+  }else{
+    cantFindArea.classList.add("hidden")
+  }
 }
 
 //validate inputHandler
@@ -258,7 +162,6 @@ function deleteCard(locationChange){
   deleteBtn.forEach((item)=>{
   item.addEventListener("click",deleteBtnHandler)
   })
-
   function deleteBtnHandler(e){
     Swal.fire({
     title: '你確定要刪除嗎?',
@@ -321,3 +224,11 @@ function renderC3(newData){
   }
 });
 }
+
+//input監聽
+inputs.forEach((input)=>{
+  input.addEventListener("change", inputHandler)
+})
+
+addTicketForm.addEventListener("submit",addTicketHandler)  //新增套票監聽
+regionSearch.addEventListener("change",regionSearchHandler) //地區塞選監聽

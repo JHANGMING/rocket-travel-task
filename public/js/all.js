@@ -64,7 +64,7 @@ function addTicketHandler(e){
   if(!ticketName.value.trim() || !ticketImgUrl.value.trim() ||!ticketRegion.value||!ticketPrice.value||!ticketNum.value||!ticketRate.value||!ticketDescription.value.trim()){
     Swal.fire(
         "新增套票失敗", //標題 
-        "您所輸入的資料不完整!檢查是否有空白處", //訊息內容(可省略)
+        "您所輸入的資料不完整!檢查是否有空白處", 
         "error" 
     );
   }else{
@@ -137,11 +137,7 @@ function regionSearchHandler(locationChange){
 
 //判斷找不到網頁卡片區
 function cardShow(newData){
-  if(newData.length===0){
-    cantFindArea.classList.remove("hidden")
-  }else{
-    cantFindArea.classList.add("hidden")
-  }
+  newData.length?cantFindArea.classList.add("hidden"):cantFindArea.classList.remove("hidden")
 }
 
 //validate inputHandler
@@ -159,9 +155,7 @@ function inputHandler(){
 function deleteCard(locationChange){
   //deleteBtn監聽
   const deleteBtn=document.querySelectorAll(".delete")
-  deleteBtn.forEach((item)=>{
-  item.addEventListener("click",deleteBtnHandler)
-  })
+  deleteBtn.forEach((item)=>item.addEventListener("click",deleteBtnHandler))
   function deleteBtnHandler(e){
     Swal.fire({
     title: '你確定要刪除嗎?',
@@ -194,7 +188,6 @@ function c3Data(data){
     obj[area]=(obj[area]||0)+1
     return obj
   },{})
-
   const newData=Object.keys(dataObj).map((item)=>[item,dataObj[item]])
   renderC3(newData)
 }
@@ -225,10 +218,7 @@ function renderC3(newData){
 });
 }
 
-//input監聽
-inputs.forEach((input)=>{
-  input.addEventListener("change", inputHandler)
-})
 
+inputs.forEach((input)=>input.addEventListener("change", inputHandler)) //input監聽
 addTicketForm.addEventListener("submit",addTicketHandler)  //新增套票監聽
 regionSearch.addEventListener("change",regionSearchHandler) //地區塞選監聽

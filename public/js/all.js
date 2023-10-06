@@ -45,8 +45,7 @@ async function getDataist(){
   try{
     const res=await axios.get(url)
     data=res.data
-    regionSearchHandler()
-    deleteCard()
+    currentRegion()
     c3Data(data)
   }
   catch(err){
@@ -119,25 +118,30 @@ function renderData(newData){
   deleteCard()
 }
 
-//地區篩選
-function regionSearchHandler(locationChange){
-  typeof locationChange==="object"?locationChange=this.value:null
+//目前地區位置
+function currentRegion(){
   const newData=data.filter((item)=>{
-    if(item.area===locationChange){
+    if(item.area===regionSearch.value){
       return item
-    }else if(!locationChange){
+    }else if(!regionSearch.value){
       return item
+    }else{
+      return
     }
   })
-  cardShow(newData)
   renderData(newData)
-  c3Data(newData)
-  deleteCard(locationChange)
+  return newData
+}
+
+//地區篩選事件
+function regionSearchHandler(){
+  cardShow(currentRegion())
+  c3Data(currentRegion())
 }
 
 //判斷找不到網頁卡片區
-function cardShow(newData){
-  newData.length?cantFindArea.classList.add("hidden"):cantFindArea.classList.remove("hidden")
+function cardShow(data){
+  data.length?cantFindArea.classList.add("hidden"):cantFindArea.classList.remove("hidden")
 }
 
 //validate inputHandler
@@ -152,7 +156,7 @@ function inputHandler(){
 }
 
 //刪除卡片
-function deleteCard(locationChange){
+function deleteCard(){
   //deleteBtn監聽
   const deleteBtn=document.querySelectorAll(".delete")
   deleteBtn.forEach((item)=>item.addEventListener("click",deleteBtnHandler))
@@ -175,7 +179,7 @@ function deleteCard(locationChange){
       let deleteId=Number(e.target.dataset.id);
       const findIDindex=data.findIndex((item)=>item.id===deleteId)
       data.splice(findIDindex,1)
-      regionSearchHandler(locationChange)
+      regionSearchHandler()
     }
   })
   }

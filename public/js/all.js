@@ -45,7 +45,7 @@ async function getDataist(){
   try{
     const res=await axios.get(url)
     data=res.data
-    currentRegion()
+    renderData(data)
     c3Data(data)
   }
   catch(err){
@@ -119,7 +119,7 @@ function renderData(newData){
 }
 
 //目前地區位置
-function currentRegion(){
+function currentRegion(fn){
   const newData=data.filter((item)=>{
     if(item.area===regionSearch.value){
       return item
@@ -129,14 +129,14 @@ function currentRegion(){
       return
     }
   })
-  renderData(newData)
-  return newData
+  fn(newData)
 }
 
 //地區篩選事件
 function regionSearchHandler(){
-  cardShow(currentRegion())
-  c3Data(currentRegion())
+  currentRegion(cardShow)
+  currentRegion(c3Data)
+  currentRegion(renderData)
 }
 
 //判斷找不到網頁卡片區

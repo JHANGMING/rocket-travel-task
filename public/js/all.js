@@ -60,31 +60,44 @@ async function getDataist(){
 function addTicketHandler(e){
   e.preventDefault();
   let dataObj={};
-  if(!ticketName.value.trim() || !ticketImgUrl.value.trim() ||!ticketRegion.value||!ticketPrice.value||!ticketNum.value||!ticketRate.value||!ticketDescription.value.trim()){
-    Swal.fire(
-        "新增套票失敗", //標題 
-        "您所輸入的資料不完整!檢查是否有空白處", 
-        "error" 
-    );
-  }else{
-    dataObj={
-      id:new Date().getTime(),
-      name:ticketName.value,
-      imgUrl:ticketImgUrl.value,
-      area:ticketRegion.value,
-      price:ticketPrice.value,
-      group:ticketNum.value,
-      rate:ticketRate.value,
-      description:ticketDescription.value
-    }
-    data.push(dataObj)
-    renderData(data)
-    c3Data(data)
-    addTicketForm.reset();
+  let errors =validate(addTicketForm,constraints);
+  if (errors) {
+    Object.keys(errors).forEach((item)=>{
+    document.querySelector(`.${item}`).textContent=errors[item]})
     Toast.fire({
-      icon: 'success',
-      title: '新增套票成功'
+      icon: 'warning',
+      title: '您所輸入的資料不完整!'
       })
+    }else{
+      dataObj={
+        id:new Date().getTime(),
+        name:ticketName.value,
+        imgUrl:ticketImgUrl.value,
+        area:ticketRegion.value,
+        price:ticketPrice.value,
+        group:ticketNum.value,
+        rate:ticketRate.value,
+        description:ticketDescription.value
+      }
+      data.push(dataObj)
+      renderData(data)
+      c3Data(data)
+      addTicketForm.reset();
+      Toast.fire({
+        icon: 'success',
+        title: '新增套票成功'
+        })
+    }
+}
+
+//validate inputHandler
+function inputHandler(){
+  this.nextElementSibling.textContent="";
+  let errors =validate(addTicketForm,constraints)
+  if(errors){
+    Object.keys(errors).forEach((item)=>{
+      document.querySelector(`.${item}`).textContent=errors[item]
+    })
   }
 }
 
@@ -144,16 +157,7 @@ function cardShow(data){
   data.length?cantFindArea.classList.add("hidden"):cantFindArea.classList.remove("hidden")
 }
 
-//validate inputHandler
-function inputHandler(){
-  this.nextElementSibling.textContent="";
-  let errors =validate(addTicketForm,constraints)
-  if(errors){
-    Object.keys(errors).forEach((item)=>{
-      document.querySelector(`.${item}`).textContent=errors[item]
-    })
-  }
-}
+
 
 //刪除卡片
 function deleteCard(){

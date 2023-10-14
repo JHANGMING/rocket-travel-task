@@ -196,8 +196,7 @@ function c3Data(data){
     obj[area]=(obj[area]||0)+1
     return obj
   },{})
-  const newData=Object.keys(dataObj).map((item)=>[item,dataObj[item]])
-  renderC3(newData)
+  renderC3(Object.entries(dataObj))
 }
 
 function renderC3(newData){
